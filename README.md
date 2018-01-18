@@ -1,2 +1,2 @@
-# DataAnalysis
-Data analysis with R Shiny
+# DataVisualization
+Tools to visualize data
