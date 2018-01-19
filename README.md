@@ -1,2 +1,2 @@
-# DataVisualization
+# DataAnalysis
 Tools to visualize data
