@@ -2,6 +2,7 @@ library(shiny)
 library(datasets)
 library(ggplot2)
 library(gplots)
+source('graphFunction.R') # Graph function to plot mean +-sd
 source("summarySE.R") # Summarize function to get the summary statistics;
 cells = c("SKMEL5", "A375", "SKMEL28", "WM88", "WM793", "WM164", "A2058", "WM115", "WM983B", "WM1799", "WM2664")
 treatment = c("PLX4720",    "Oligomycin", "Oxamic") 
@@ -51,10 +52,11 @@ ui <- shinyUI(fluidPage(
                  selectInput('xcol', 'X Variable', ""),
                  selectInput('ycol', 'Y Variable', "", selected = "")),
                mainPanel(
-                 plotOutput('MyPlot', width = 600, height = 800)))), 
+                 plotOutput('MyPlot', width = 600, height = 700)))), 
     tabPanel("Data Summary", 
-               mainPanel(
-               dataTableOutput(outputId = "summary")
+               splitLayout(
+                plotOutput('summaryPlot', width=600, height = 700),
+                dataTableOutput(outputId = "summary")
              )), 
     tabPanel("Proliferation Rates", 
              pageWithSidebar(
@@ -99,9 +101,12 @@ server <- shinyServer(function(input, output, session) {
     x <- data()[, c(input$xcol, input$ycol, "Conc", "Cell.Line", "Treatment")]
     plot(x[,1], x[,2], ylim = c((min(x[,2])-1), max(x[,2])+1), xlab = paste0(input$xcol), type="l", ylab = paste0(input$ycol), main=paste0(input$title))
   })
+  output$summaryPlot <- renderPlot({
+    graph(data1(), data1()$Time, data1()$nl2, data1()$Conc, title="", sub="", col=c("black"), 0, (max(data1()$Time)+10), (min(data1()$nl2)-1), (max(data1()$nl2))+1)
+  })
   output$summary <- renderDataTable({data1()})
   output$dip <- renderDataTable({data2()})
-  output$box <- renderPlot({plot(data2()$rates~log10(data2()$Conc), ylab = "rates", xlab = "Log10(Conc)", type="b")})
+  output$box <- renderPlot({boxplot(data2()$rates~log10(data2()$Conc), ylab = "rates", xlab = "Log10(Conc)", type="b", ylim=c(-0.01, 0.06))})
 })
 
 shinyApp(ui, server)
