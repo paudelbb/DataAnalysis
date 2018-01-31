@@ -1,0 +1,12 @@
+name: WorldBankR
+title: WorldBankR
+username:
+account: paudelbb
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 264719
+bundleId: 1197132
+url: https://paudelbb.shinyapps.io/WorldBankR/
+when: 1517195375.80715
+asMultiple: FALSE
+asStatic: FALSE

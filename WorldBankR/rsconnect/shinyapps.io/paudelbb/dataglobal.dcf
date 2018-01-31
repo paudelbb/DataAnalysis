@@ -1,0 +1,12 @@
+name: dataglobal
+title: dataGlobal
+username:
+account: paudelbb
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 266676
+bundleId: 1200304
+url: https://paudelbb.shinyapps.io/dataglobal/
+when: 1517368004.45261
+asMultiple: FALSE
+asStatic: FALSE
